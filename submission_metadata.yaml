@@ -1,21 +1,26 @@
-team_name: "Antigravity AI"
-contact_email: "antigravity@gemini.ai"
-repository_url: "https://github.com/example/redrob-hackathon"
+team_name: "Pritesh Virat"
+contact_email: "priteshvirat@gmail.com"
+repository_url: "https://github.com/priteshvirat24/redrob-ai-hackathon"
 
 architecture:
-  embedding_model: "all-MiniLM-L6-v2 (simulated)"
-  vector_db: "FAISS/NumPy"
-  ranking_framework: "Custom Multi-Agent Pipeline"
-  
+  embedding_model: "all-MiniLM-L6-v2 + BM25 hybrid, cross-encoder rerank"
+  vector_db: "NumPy dense + rank-bm25 sparse"
+  cross_encoder: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  ranking_framework: "Custom Multi-Agent Pipeline with RRF fusion"
+
 compute_metrics:
-  execution_time_seconds: 19.73
-  peak_memory_mb: 850
-  
+  # Will be updated with actual measured values after the fixed run
+  execution_time_seconds: 0
+  peak_memory_mb: 0
+
 features_used:
-  - "Semantic Career Path Matching"
-  - "Title Relevance Tiering"
-  - "Honeypot Detection (Duration/Dates mismatch)"
-  - "Keyword Stuffing Detection"
-  - "Recruiter Response Rate Multiplier"
-  - "Notice Period & Availability Analysis"
-  - "Career Coherence & Title Progression"
+  - "Dense + BM25 Hybrid Retrieval with RRF Fusion"
+  - "Cross-Encoder Rerank (top 200)"
+  - "Title Relevance Tiering (5-tier)"
+  - "Normalized Skill Matching with Alias Resolution"
+  - "Honeypot Detection (duration mismatch, expert+0mo, keyword stuffing)"
+  - "JD Availability Penalty (low response + stale activity)"
+  - "Career Coherence and Progression Scoring"
+  - "Recruiter Response Rate and Notice Period Analysis"
+  - "Product vs Consulting Company Classification"
+  - "Deterministic Feature-Driven Reasoning Generation"

@@ -1,9 +1,22 @@
+# Virtual Environments
 venv/
+env/
 __pycache__/
 *.pyc
-.env
-backend/precomputed/
-submission.csv
-node_modules/
-.next/
-[PUB] India_runs_data_and_ai_challenge/
+
+# Data & Output
+datasets/
+[PUB]*
+*.csv
+*.xlsx
+*.pkl
+*.npy
+*.jsonl
+
+# Precomputed Cache
+intelligence/feature_store/precomputed/
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
