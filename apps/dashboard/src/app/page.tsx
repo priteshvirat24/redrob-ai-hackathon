@@ -31,8 +31,6 @@ export default function Home() {
 
   const fetchData = (ablateFeature?: string) => {
     setIsAblating(true)
-    // In a real app, this would hit the python backend ablation endpoint
-    // We mock the metric changes for the demo UI
     setTimeout(() => {
       setCandidates([
         {
@@ -55,7 +53,6 @@ export default function Home() {
         }
       ])
       
-      // Calculate mock NDCG based on toggles
       let baseNdcg = 0.94
       if (!features.semantic_score && ablateFeature !== 'semantic_score') baseNdcg -= 0.12
       if (ablateFeature === 'semantic_score') baseNdcg -= 0.12
@@ -90,22 +87,22 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen pb-20 relative">
+    <div className="min-h-screen pb-20 relative text-gray-900 bg-gray-50/50">
       {/* Header */}
-      <header className="border-b border-white/5 bg-background/50 backdrop-blur-xl sticky top-0 z-50">
+      <header className="border-b border-gray-200 bg-white/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-purple-600 text-white p-2 rounded-lg shadow-lg shadow-purple-500/20">
+            <div className="bg-purple-600 text-white p-2 rounded-lg shadow-md shadow-purple-500/20">
               <Brain className="w-5 h-5" />
             </div>
-            <h1 className="font-bold text-xl tracking-tight bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Redrob Copilot</h1>
+            <h1 className="font-bold text-xl tracking-tight text-gray-900">Redrob Copilot</h1>
           </div>
           <div className="flex items-center gap-4 text-sm font-medium">
             <button 
               onClick={() => setIsChatOpen(!isChatOpen)}
-              className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-full transition-all"
+              className="flex items-center gap-2 bg-white hover:bg-gray-50 border border-gray-200 shadow-sm px-4 py-2 rounded-full transition-all text-gray-700"
             >
-              <MessageSquare className="w-4 h-4 text-blue-400"/> Ask AI
+              <MessageSquare className="w-4 h-4 text-purple-600"/> Ask AI
             </button>
           </div>
         </div>
@@ -118,24 +115,24 @@ export default function Home() {
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md"
+            className="bg-white border border-gray-200 shadow-sm rounded-2xl p-6"
           >
             <div className="flex items-center gap-2 mb-6">
-              <Activity className="w-5 h-5 text-purple-400" />
-              <h3 className="font-bold text-lg">AI Evaluation Lab</h3>
+              <Activity className="w-5 h-5 text-purple-600" />
+              <h3 className="font-bold text-lg text-gray-900">AI Evaluation Lab</h3>
             </div>
             
             {stats && (
               <div className="mb-8">
-                <div className="text-sm text-muted-foreground mb-1">Live NDCG@10</div>
+                <div className="text-sm text-gray-500 mb-1 font-medium">Live NDCG@10</div>
                 <div className="flex items-end gap-3">
-                  <span className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  <span className="text-4xl font-black text-purple-600">
                     {stats.metrics.ndcg_10}
                   </span>
                   {stats.metrics.previous_ndcg_10 && stats.metrics.previous_ndcg_10 !== stats.metrics.ndcg_10 && (
                     <motion.span 
                       initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                      className={`text-sm font-medium mb-1 ${parseFloat(stats.metrics.ndcg_10) > parseFloat(stats.metrics.previous_ndcg_10) ? 'text-green-400' : 'text-red-400'}`}
+                      className={`text-sm font-bold mb-1 ${parseFloat(stats.metrics.ndcg_10) > parseFloat(stats.metrics.previous_ndcg_10) ? 'text-green-500' : 'text-red-500'}`}
                     >
                       {parseFloat(stats.metrics.ndcg_10) > parseFloat(stats.metrics.previous_ndcg_10) ? '+' : ''}
                       {(parseFloat(stats.metrics.ndcg_10) - parseFloat(stats.metrics.previous_ndcg_10)).toFixed(4)}
@@ -146,15 +143,15 @@ export default function Home() {
             )}
 
             <div className="space-y-4">
-              <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">Ablation Toggles</div>
+              <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Ablation Toggles</div>
               
               {Object.entries(features).map(([key, value]) => (
                 <div key={key} className="flex items-center justify-between">
-                  <span className="text-sm capitalize">{key.replace('_', ' ')}</span>
+                  <span className="text-sm font-medium text-gray-700 capitalize">{key.replace('_', ' ')}</span>
                   <button 
                     onClick={() => toggleFeature(key as keyof typeof features)}
                     disabled={isAblating}
-                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${value ? 'bg-purple-600' : 'bg-white/20'}`}
+                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${value ? 'bg-purple-600' : 'bg-gray-200'}`}
                   >
                     <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${value ? 'translate-x-5' : 'translate-x-1'}`} />
                   </button>
@@ -168,12 +165,12 @@ export default function Home() {
         <div className="flex-1">
           <div className="flex justify-between items-end mb-6">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight">Top Ranked Candidates</h2>
-              <p className="text-muted-foreground text-sm mt-1">Found 100 matches out of 100,000 processed in 4.2s</p>
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900">Top Ranked Candidates</h2>
+              <p className="text-gray-500 text-sm mt-1 font-medium">Found 100 matches out of 100,000 processed in 4.2s</p>
             </div>
             <div className="flex gap-2">
-              <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 flex items-center gap-2 text-sm">
-                <Filter className="w-4 h-4 text-muted-foreground" /> Filter
+              <div className="bg-white border border-gray-200 shadow-sm rounded-lg px-3 py-1.5 flex items-center gap-2 text-sm font-medium text-gray-600 hover:bg-gray-50 cursor-pointer transition-colors">
+                <Filter className="w-4 h-4 text-gray-400" /> Filter
               </div>
             </div>
           </div>
@@ -183,10 +180,10 @@ export default function Home() {
               {loading || isAblating ? (
                 <motion.div 
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  className="py-20 flex flex-col items-center justify-center text-muted-foreground"
+                  className="py-20 flex flex-col items-center justify-center text-gray-500"
                 >
-                  <Loader2 className="w-8 h-8 animate-spin text-purple-500 mb-4" />
-                  <p>Running DAG Orchestrator & Recalculating Graph...</p>
+                  <Loader2 className="w-8 h-8 animate-spin text-purple-600 mb-4" />
+                  <p className="font-medium">Running DAG Orchestrator & Recalculating Graph...</p>
                 </motion.div>
               ) : (
                 candidates.map((candidate: any, i) => (
@@ -213,36 +210,36 @@ export default function Home() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 w-96 h-[500px] bg-background/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50"
+            className="fixed bottom-6 right-6 w-96 h-[500px] bg-white border border-gray-200 rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50"
           >
-            <div className="p-4 border-b border-white/10 bg-white/5 flex justify-between items-center">
+            <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-purple-400" />
-                <span className="font-semibold">AI Assistant</span>
+                <Sparkles className="w-4 h-4 text-purple-600" />
+                <span className="font-bold text-gray-800">AI Assistant</span>
               </div>
-              <button onClick={() => setIsChatOpen(false)} className="text-muted-foreground hover:text-white">&times;</button>
+              <button onClick={() => setIsChatOpen(false)} className="text-gray-400 hover:text-gray-600">&times;</button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white">
               {chatLog.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm ${msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-white/10 text-gray-200'}`}>
+                  <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${msg.role === 'user' ? 'bg-purple-600 text-white font-medium' : 'bg-gray-100 text-gray-800'}`}>
                     {msg.content}
                   </div>
                 </div>
               ))}
             </div>
             
-            <div className="p-4 border-t border-white/10 bg-white/5">
+            <div className="p-4 border-t border-gray-100 bg-gray-50">
               <form onSubmit={handleChat} className="relative">
                 <input 
                   type="text" 
                   value={chatQuery}
                   onChange={e => setChatQuery(e.target.value)}
                   placeholder="Ask the Knowledge Graph..." 
-                  className="w-full bg-black/50 border border-white/10 rounded-full pl-4 pr-10 py-2.5 text-sm outline-none focus:border-purple-500 transition-colors"
+                  className="w-full bg-white border border-gray-200 rounded-full pl-4 pr-10 py-2.5 text-sm outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-gray-800 placeholder-gray-400 shadow-sm"
                 />
-                <button type="submit" className="absolute right-3 top-2.5 text-purple-400 hover:text-purple-300">
+                <button type="submit" className="absolute right-3 top-2.5 text-purple-600 hover:text-purple-500">
                   <Search className="w-4 h-4" />
                 </button>
               </form>
