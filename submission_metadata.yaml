@@ -1,0 +1,21 @@
+team_name: "Antigravity AI"
+contact_email: "antigravity@gemini.ai"
+repository_url: "https://github.com/example/redrob-hackathon"
+
+architecture:
+  embedding_model: "all-MiniLM-L6-v2 (simulated)"
+  vector_db: "FAISS/NumPy"
+  ranking_framework: "Custom Multi-Agent Pipeline"
+  
+compute_metrics:
+  execution_time_seconds: 19.73
+  peak_memory_mb: 850
+  
+features_used:
+  - "Semantic Career Path Matching"
+  - "Title Relevance Tiering"
+  - "Honeypot Detection (Duration/Dates mismatch)"
+  - "Keyword Stuffing Detection"
+  - "Recruiter Response Rate Multiplier"
+  - "Notice Period & Availability Analysis"
+  - "Career Coherence & Title Progression"

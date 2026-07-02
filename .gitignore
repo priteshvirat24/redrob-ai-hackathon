@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+.env
+backend/precomputed/
+submission.csv
+node_modules/
+.next/
+[PUB] India_runs_data_and_ai_challenge/
